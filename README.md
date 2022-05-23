@@ -3,48 +3,48 @@
 ## code
 
 ```ts
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
-  console.log("===== posts =====");
-  console.log(posts);
+const posts = await prisma.post.findMany({
+  orderBy: {
+    updatedAt: "desc",
+  },
+});
+console.log("===== posts =====");
+console.log(posts);
 
-  const page1 = await prisma.post.findMany({
-    take: 2,
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
-  console.log("====== page1 =====");
-  console.log(page1);
+const page1 = await prisma.post.findMany({
+  take: 2,
+  orderBy: {
+    updatedAt: "desc",
+  },
+});
+console.log("====== page1 =====");
+console.log(page1);
 
-  const page2 = await prisma.post.findMany({
-    skip: 1,
-    cursor: {
-      id: 5,
-    },
-    take: 2,
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
-  console.log("====== page2 =====");
-  console.log(page2);
+const page2 = await prisma.post.findMany({
+  skip: 1,
+  cursor: {
+    id: 5,
+  },
+  take: 2,
+  orderBy: {
+    updatedAt: "desc",
+  },
+});
+console.log("====== page2 =====");
+console.log(page2);
 
-  const page3 = await prisma.post.findMany({
-    skip: 1,
-    cursor: {
-      id: 6,
-    },
-    take: 2,
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
-  console.log("====== page3 =====");
-  console.log(page3);
+const page3 = await prisma.post.findMany({
+  skip: 1,
+  cursor: {
+    id: 6,
+  },
+  take: 2,
+  orderBy: {
+    updatedAt: "desc",
+  },
+});
+console.log("====== page3 =====");
+console.log(page3);
 ```
 
 ## result
@@ -160,7 +160,9 @@ $ ts-node ./script.ts
 
 ## SQL
 
-```sqlite
+script.ts
+
+```sql
 /* ===== posts ===== */
 
 SELECT
@@ -210,4 +212,36 @@ FROM `main`.`Post`, (
 WHERE `main`.`Post`.`updatedAt` <= `order_cmp`.`Post_updatedAt_0`
 ORDER BY `main`.`Post`.`updatedAt` DESC
 LIMIT ? OFFSET ?
+```
+
+script2.ts
+
+```sql
+SELECT
+  `main`.`Post`.`id`,
+  `main`.`Post`.`title`,
+  `main`.`Post`.`content`,
+  `main`.`Post`.`published`,
+  `main`.`Post`.`authorId`,
+  `main`.`Post`.`createdAt`,
+  `main`.`Post`.`updatedAt`
+FROM
+  `main`.`Post`,
+  (
+    SELECT
+      `main`.`Post`.`updatedAt` AS `Post_updatedAt_0`,
+      `main`.`Post`.`id` AS `Post_id_1` FROM `main`.`Post`
+    WHERE (`main`.`Post`.`id`) = (?)
+  ) AS `order_cmp`
+WHERE (
+  (
+    `main`.`Post`.`updatedAt` = `order_cmp`.`Post_updatedAt_0`
+    AND
+    `main`.`Post`.`id` <= `order_cmp`.`Post_id_1`
+  )
+  OR
+  (`main`.`Post`.`updatedAt` < `order_cmp`.`Post_updatedAt_0`)
+) ORDER BY `main`.`Post`.`updatedAt` DESC, `main`.`Post`.`id` DESC
+LIMIT ?
+OFFSET ?
 ```

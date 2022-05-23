@@ -16,6 +16,8 @@ model Post {
   authorId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  @@unique([id, updatedAt])
 }
 
 model User {

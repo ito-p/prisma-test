@@ -1,6 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: [
+    {
+      emit: "stdout",
+      level: "query",
+    },
+  ],
+});
 
 // A `main` function so that you can use async/await
 async function main() {
