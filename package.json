@@ -8,7 +8,8 @@
     "@types/node": "16.11.26"
   },
   "scripts": {
-    "dev": "ts-node ./script.ts"
+    "dev": "ts-node ./script.ts",
+    "dev2": "ts-node ./script2.ts"
   },
   "dependencies": {
     "@prisma/client": "3.12.0"
