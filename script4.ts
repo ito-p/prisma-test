@@ -34,36 +34,36 @@ async function main() {
   await prisma.post.create({
     data: {
       id: 2,
-      title: "Post by sarah 2 (updatedAt: date3)",
+      title: "Post by sarah 2 (updatedAt: date3 -> date1)",
       authorId: 1,
-      updatedAt: date3,
+      updatedAt: date1,
       createdAt: date2,
     },
   });
   await prisma.post.create({
     data: {
       id: 3,
-      title: "Post by sarah 3 (updatedAt: date5)",
+      title: "Post by sarah 3 (updatedAt: date5 -> date1)",
       authorId: 1,
-      updatedAt: date5,
+      updatedAt: date1,
       createdAt: date3,
     },
   });
   await prisma.post.create({
     data: {
       id: 4,
-      title: "Post by sarah 4 (updatedAt: date4)",
+      title: "Post by sarah 4 (updatedAt: date4 -> date1)",
       authorId: 1,
-      updatedAt: date4,
+      updatedAt: date1,
       createdAt: date4,
     },
   });
   await prisma.post.create({
     data: {
       id: 5,
-      title: "Post by sarah 5 (updatedAt: date2)",
+      title: "Post by sarah 5 (updatedAt: date2 -> date1)",
       authorId: 1,
-      updatedAt: date2,
+      updatedAt: date1,
       createdAt: date5,
     },
   });

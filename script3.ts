@@ -34,9 +34,9 @@ async function main() {
   await prisma.post.create({
     data: {
       id: 2,
-      title: "Post by sarah 2 (updatedAt: date3)",
+      title: "Post by sarah 2 (updatedAt: date3 -> date4)",
       authorId: 1,
-      updatedAt: date3,
+      updatedAt: date4,
       createdAt: date2,
     },
   });

@@ -13,66 +13,60 @@ const prisma = new PrismaClient({
 async function main() {
   // ... you will write your Prisma Client queries here
 
-  // 1) Create Users
-  // await prisma.user.create({
-  //   data: {
-  //     name: "User1",
-  //     email: "email1@gmail.com",
-  //   },
-  // });
-  // await prisma.user.create({
-  //   data: {
-  //     name: "User2",
-  //     email: "email2@gmail.com",
-  //   },
-  // });
+  // 1) Delete All
+  await prisma.post.deleteMany();
 
   // 2) Create Posts
-  // const date1 = new Date("2022-01-01 00:00:00");
-  // const date2 = new Date("2022-01-02 00:00:00");
-  // const date3 = new Date("2022-01-03 00:00:00");
-  // const date4 = new Date("2022-01-04 00:00:00");
-  // const date5 = new Date("2022-01-05 00:00:00");
-  // await prisma.post.create({
-  //   data: {
-  //     title: "Post by sarah 1 (updatedAt: date1)",
-  //     authorId: 1,
-  //     updatedAt: date1,
-  //     createdAt: date1,
-  //   },
-  // });
-  // await prisma.post.create({
-  //   data: {
-  //     title: "Post by sarah 2 (updatedAt: date3)",
-  //     authorId: 1,
-  //     updatedAt: date3,
-  //     createdAt: date2,
-  //   },
-  // });
-  // await prisma.post.create({
-  //   data: {
-  //     title: "Post by sarah 3 (updatedAt: date5)",
-  //     authorId: 1,
-  //     updatedAt: date5,
-  //     createdAt: date3,
-  //   },
-  // });
-  // await prisma.post.create({
-  //   data: {
-  //     title: "Post by sarah 4 (updatedAt: date4)",
-  //     authorId: 1,
-  //     updatedAt: date4,
-  //     createdAt: date4,
-  //   },
-  // });
-  // await prisma.post.create({
-  //   data: {
-  //     title: "Post by sarah 5 (updatedAt: date2)",
-  //     authorId: 1,
-  //     updatedAt: date2,
-  //     createdAt: date5,
-  //   },
-  // });
+  const date1 = new Date("2022-01-01 00:00:00");
+  const date2 = new Date("2022-01-02 00:00:00");
+  const date3 = new Date("2022-01-03 00:00:00");
+  const date4 = new Date("2022-01-04 00:00:00");
+  const date5 = new Date("2022-01-05 00:00:00");
+  await prisma.post.create({
+    data: {
+      id: 1,
+      title: "Post by sarah 1 (updatedAt: date1)",
+      authorId: 1,
+      updatedAt: date1,
+      createdAt: date1,
+    },
+  });
+  await prisma.post.create({
+    data: {
+      id: 2,
+      title: "Post by sarah 2 (updatedAt: date3)",
+      authorId: 1,
+      updatedAt: date3,
+      createdAt: date2,
+    },
+  });
+  await prisma.post.create({
+    data: {
+      id: 3,
+      title: "Post by sarah 3 (updatedAt: date5)",
+      authorId: 1,
+      updatedAt: date5,
+      createdAt: date3,
+    },
+  });
+  await prisma.post.create({
+    data: {
+      id: 4,
+      title: "Post by sarah 4 (updatedAt: date4)",
+      authorId: 1,
+      updatedAt: date4,
+      createdAt: date4,
+    },
+  });
+  await prisma.post.create({
+    data: {
+      id: 5,
+      title: "Post by sarah 5 (updatedAt: date2)",
+      authorId: 1,
+      updatedAt: date2,
+      createdAt: date5,
+    },
+  });
 
   // 3) Delete First Post
   // await prisma.post.delete({
@@ -100,7 +94,7 @@ async function main() {
   const page2 = await prisma.post.findMany({
     skip: 1,
     cursor: {
-      id: 5,
+      id: page1[page1.length - 1].id,
     },
     take: 2,
     orderBy: {
@@ -113,7 +107,7 @@ async function main() {
   const page3 = await prisma.post.findMany({
     skip: 1,
     cursor: {
-      id: 6,
+      id: page2[page2.length - 1].id,
     },
     take: 2,
     orderBy: {
