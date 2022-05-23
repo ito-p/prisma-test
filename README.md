@@ -157,3 +157,57 @@ $ ts-node ./script.ts
 ]
 ✨  Done in 0.76s.
 ```
+
+## SQL
+
+```sqlite
+/* ===== posts ===== */
+
+SELECT
+  `main`.`Post`.`id`,
+  `main`.`Post`.`title`,
+  `main`.`Post`.`content`,
+  `main`.`Post`.`published`,
+  `main`.`Post`.`authorId`,
+  `main`.`Post`.`createdAt`,
+  `main`.`Post`.`updatedAt`
+FROM `main`.`Post`
+WHERE 1=1
+ORDER BY `main`.`Post`.`updatedAt` DESC
+LIMIT ? OFFSET ?
+
+/* ===== page1 ===== */
+
+SELECT
+  `main`.`Post`.`id`,
+  `main`.`Post`.`title`,
+  `main`.`Post`.`content`,
+  `main`.`Post`.`published`,
+  `main`.`Post`.`authorId`,
+  `main`.`Post`.`createdAt`,
+  `main`.`Post`.`updatedAt`
+FROM `main`.`Post`
+WHERE 1=1
+ORDER BY `main`.`Post`.`updatedAt` DESC
+LIMIT ? OFFSET ?
+
+/* ===== page2 ===== */
+
+SELECT
+  `main`.`Post`.`id`,
+  `main`.`Post`.`title`,
+  `main`.`Post`.`content`,
+  `main`.`Post`.`published`,
+  `main`.`Post`.`authorId`,
+  `main`.`Post`.`createdAt`,
+  `main`.`Post`.`updatedAt`
+FROM `main`.`Post`, (
+  SELECT
+    `main`.`Post`.`updatedAt` AS `Post_updatedAt_0`
+  FROM `main`.`Post`
+    WHERE (`main`.`Post`.`id`) = (?)
+) AS `order_cmp`
+WHERE `main`.`Post`.`updatedAt` <= `order_cmp`.`Post_updatedAt_0`
+ORDER BY `main`.`Post`.`updatedAt` DESC
+LIMIT ? OFFSET ?
+```
